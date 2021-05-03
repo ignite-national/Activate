@@ -55,14 +55,39 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 		}
-		.text
+		.bg
 		{
-			width: 100%;
-			height: 100%;
-			float: center;
-			background-image:url(assets/minigames/text.png);
-			background-repeat: no-repeat;
-			background-size: cover;
+			position: absolute;
+		}
+		.text{
+			position: absolute;
+		  top: 70;
+		  left: 800;
+		}
+		.pant{
+			position: absolute;
+		  top: 180;
+		  left: 770;
+		}
+		.cloth{
+			position: absolute;
+		  top: 80;
+		  left: 750;
+		}
+		.face{
+			position: absolute;
+		  top: 95;
+		  left: 778;
+		}
+		.hair{
+			position: absolute;
+		  top: 88;
+		  left: 775;
+		}
+		.board{
+			position: absolute;
+		  top: 155;
+		  left: 745;
 		}
 		.blue
 		{
@@ -149,7 +174,16 @@
 			float: left;
 			background-image:url(assets/minigames/b3c0ff.png);
 			background-repeat: no-repeat;
-		}
+		}/*Filter styles*/
+.saturate { filter: saturate(3); }
+.grayscale { filter: grayscale(100%); }
+.contrast { filter: contrast(160%); }
+.brightness { filter: brightness(0.25); }
+.blur { filter: blur(3px); }
+.invert { filter: invert(100%); }
+.sepia { filter: sepia(100%); }
+.huerotate { filter: hue-rotate(180deg); }
+.rss.opacity { filter: opacity(50%); }
 	</style>
 	<script>
 		$(document).ready(function() {
@@ -249,9 +283,11 @@
 		  var data = ev.dataTransfer.getData("text");
 		  //ev.target.appendChild(document.getElementById(data));
 		  if(ev.target.id=="text"){
-		  	ev.target.style.color=data;
+		  	ev.target.src='assets/minigames/text-' + data + '.png';//addClass("saturate");
+		  }else if(ev.target.id=="pant"){
+		  	ev.target.src='assets/minigames/pant-' + data + '.png';
 		  }else{
-		  	ev.target.style.backgroundColor=data;
+		  	ev.target.src='assets/minigames/' + ev.target.id + '-' + data + '.png';
 		  }
 		}
 	</script>
@@ -279,8 +315,16 @@
 			</div>
 		</div>
 		<div id="puzzleContainer" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<p style="color:#FF0000; font-family:Monaco; font-size:50px; text-align: center;"; ondrop="drop(event)" ondragover="allowDrop(event)" id="text">IT'S TIME TO DECREASE TUITION</p>
-			<!--<div id="posterContainer">
+			
+			<img src="assets/minigames/bg-232023.png" height="292" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='bg' class='bg'>
+			<img src="assets/minigames/pant-ffffef.png" height="108" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='pant' class ='pant'>
+			<img src="assets/minigames/cloth-ffffef.png" height="108" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='cloth' class ='cloth'>
+			<img src="assets/minigames/face-a65659.png" height="45" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='face' class ='face'>
+			<img src="assets/minigames/hair-f8c000.png" height="77" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='hair' class ='hair'>
+			<img src="assets/minigames/board-f8c49e.png" height="72" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='board' class ='board'>
+	
+			<img src="assets/minigames/text-ffffef.png" height="217" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='text' class ='text'>
+		<!--<p style="color:#FF0000; font-family:Monaco; font-size:50px; text-align: center;"; ondrop="drop(event)" ondragover="allowDrop(event)" id="text">IT'S TIME TO DECREASE TUITION</p><div id="posterContainer">
 				<div id="232023" ondrop="drop(event)" ondragover="allowDrop(event)" class="poster"></div>
 			</div>
 
