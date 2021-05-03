@@ -78,14 +78,32 @@
 			width: 50px;
 			height: 50px;
 			float: center;
-			background-image:url(assets/minigames/b3c0ff.png);
+			background-image:url(assets/minigames/bubbles/Bubble_with_text_01.png);
 			background-repeat: no-repeat;
 			background-size: cover;
 		}
 		.yellow
 		{
-			width: 50px;
-			height: 50px;
+			width: 100px;
+			height: 100px;
+			float: center;
+			background-image:url(assets/minigames/Color_Yellow.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.right
+		{
+			width: 100px;
+			height: 100px;
+			float: center;
+			background-image:url(assets/minigames/Color_Yellow.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.left
+		{
+			width: 100px;
+			height: 100px;
 			float: center;
 			background-image:url(assets/minigames/Color_Yellow.png);
 			background-repeat: no-repeat;
@@ -274,36 +292,63 @@
 		  var pieces = $("#bubbles div");
 				
 		  console.log("hello!"); 
-		  var pos = 100;
-		  var max = 600;
+		  var pos = 500;
+		  var min = 500;
+		  var max = 1000;
 		  clearInterval(id);
-		  id = setInterval(frame, 150);
+		  id = setInterval(frame, 100);
+		  var f = 0;
 		  function frame() {
-		  	console.log(pos);
+		  //	console.log(pos);
 		  	pieces.each(function(){
-				if(this.id == 'test' || this.id == 'ffffef' || this.id == 'f8c49e'){	
-					if (pos == max) {
-				      clearInterval(id);
-				    } else {
-				      pos++; 
-				      $(this).css({
-							position: "absolute",
-							left: pos + 'px'
-						})
-				      console.log(this.style.left);
-				    }
-				}else{
-					if (pos == max) {
-				      clearInterval(id);
-				    } else {
-				      pos++; 
-				      $(this).css({
-							position: "absolute",
-							left: (max - pos) + 'px'
-						})
-				    }
+		  		if(document.getElementById(this.id) != null){
+			  		var currentLeft = parseInt(document.getElementById(this.id).style.left);
+			  		//console.log(this.id + " Current Left: " + currentLeft + " Dir: " + this.className);
+					if(this.className == 'right'){	
+						if (currentLeft == max) {
+					      clearInterval(id);
+					    } else {
+					      currentLeft++; 
+					      $(this).css({
+								position: "absolute",
+								left: currentLeft + 'px'
+							})
+					 //    console.log("new Left? " + currentLeft);
+					   //  console.log("new Left " + this.style.left);
+					    }
+					}else{
+						if (currentLeft == min) {
+					      clearInterval(id);
+					    } else {
+					      currentLeft--; 
+					      $(this).css({
+								position: "absolute",
+								left: currentLeft + 'px'
+							})
+					    }
+					}
+					
 				}
-				}); 
+			});
+				if(f % 50 == 0){
+						console.log("new bubble: " + f);
+						//add new bubble
+						var left = min;
+						var dir = 'right';
+						if(Math.floor(Math.random() * 2) == 1){
+							dir = 'left';
+							left = max;
+						} 
+						var bubDec = '';
+						var bubNum = Math.floor(Math.random() * 23 + 0) + 1;
+						if(bubNum < 10) bubDec = '0';
+
+						console.log(bubNum);
+						document.getElementById("bubbles").innerHTML = document.getElementById("bubbles").innerHTML + "<div id='bubNum_" + bubNum + "' class='" + dir + "' draggable='true' ondragstart='drag(event)' style='background-image:url(assets/minigames/bubbles/Bubble_with_text_" + bubDec + bubNum + ".png); top:" + Math.floor(Math.random() * 20 + 0) * 20 + "px; left:" + left + "px;'></div>";
+
+			  			pieces = $("#bubbles div");
+					}
+					f++;
 		    
 		  }
 		}
@@ -311,29 +356,20 @@
 </head>
 <body>
 	<div id="container">
-		<div id="bubbles">
-			<div id="test" class="blue" draggable="true" ondragstart="drag(event)" style="top:10px; left:100px;"></div>
+		<div id="bubbles" class ="bubbles">
 
-				<div id="b3c0ff" draggable="true" ondragstart="drag(event)" class="blue" style="top: 50px; left:100px;"></div>
+				<div id="blue" draggable="true" ondragstart="drag(event)" class="left" style="top: 50px; left:100px;"></div>
+				<!--
+				<div id="white" draggable="true" ondragstart="drag(event)" class="right" style="top:150px; left:10px;"></div>
 
-				<div id="f8c000" draggable="true" ondragstart="drag(event)" class="yellow" style="top:100px; left:10px;"></div>
+				<div id="red" draggable="true" ondragstart="drag(event)" class="left" style="top:200px; left:10px;"></div>
 
-				<div id="ffffef" draggable="true" ondragstart="drag(event)" class="white" style="top:150px; left:10px;"></div>
+				<div id="nude" draggable="true" ondragstart="drag(event)" class="right"style="top:250px; left:10px;"></div>
 
-				<div id="a65659" draggable="true" ondragstart="drag(event)" class="red" style="top:200px; left:10px;"></div>
-
-				<div id="f8c49e" draggable="true" ondragstart="drag(event)" class="nude"style="top:250px; left:10px;"></div>
-
-				<div id="232023" draggable="true" ondragstart="drag(event)" class="black" style="top:300px; left:10px;"></div>
-
+				<div id="black" draggable="true" ondragstart="drag(event)" class="left" style="top:300px; left:10px;"></div>
+-->
 			<p style="color:#FF0000; font-family:Monaco; font-size:50px; text-align: center;"; ondrop="drop(event)" ondragover="allowDrop(event)" id="text">0</p>
-			<!--<div id="posterContainer">
-				<div id="232023" ondrop="drop(event)" ondragover="allowDrop(event)" class="poster"></div>
-			</div>
-
-			<div id="posterContainer">
-				<div id="232023" ondrop="drop(event)" ondragover="allowDrop(event)" class="text"></div>
-			</div>--></div></div>
+			</div></div>
 		<ul id="buttons">
 			<li><button id="btnStart">Start</button></li>
 			<li><button id="btnReset">Reset</button></li>
