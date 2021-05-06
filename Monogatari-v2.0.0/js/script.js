@@ -3,192 +3,41 @@
 // Define the messages used in the game.
 monogatari.action ('message').messages ({
 	'Wader': {
-		title: 'Wader',
-		subtitle: "It seems like you're just starting your political journey!",
+		title: "Welcome to the movement.",
+		subtitle: "You’re new to this work and want to get more engaged in politics, policy, and activism.",
 		body: `
-			<p>As a wader, you might be interested in <a href='https://ignitenational.org/calendar'>attending a training event</a>!</p>
+			<p>Activate your political power now. Get resources from IGNITE <a href="https://lp.ignitenational.org/if-youre-new-to-politics-weve-got-your-back" target="_blank">here</a> or drop your name and email below. We’ll get those to your inbox ASAP.</p>
 		`
 	},
 	'Swimmer': {
-		title: 'Swimmer',
-		subtitle: "It seems like you're ready to take the next steps in your political journey!",
+		title: "Hey, change maker. Look at you making a difference!",
+		subtitle: "You're already putting in the time to improve your community and solve problems. You're ready to take your activism and political engagement to the next level.",
 		body: `
-			<p>As a swimmer, you might be interested in <a href='https://ignitenational.org/calendar'>attending a training event</a> or <a href='https://ignitenational.org/advocate#/'>advocating for change</a>!</p>
+			<p>Activate your political power now. Get resources from IGNITE <a href="https://lp.ignitenational.org/putting_in_the_work" target="_blank">here</a> or drop your name and email below. We’ll get those to your inbox ASAP.</p>
 		`
 	},
 	'Diver': {
-		title: 'Diver',
-		subtitle: "You really seem to know what you're doing!",
+		title: "You're on fire!",
+		subtitle: "You're ready to run for elected office or pursue a career in policy. We can't wait to call you Council Member, Mayor, Senator, or even President!",
 		body: `
-			<p>As a diver, you might be interested in <a href='https://ignitenational.org/advocate#/'>advocating for change</a>!</p>
+			<p>Activate your political power now. Get resources from IGNITE <a href="https://lp.ignitenational.org/on_fire_ready_to_run" target="_blank">here</a> or drop your name and email below. We’ll get those to your inbox ASAP.</p>
 		`
 	},
 	'Minigame1': {
-		title: 'Diver',
-		subtitle: "You really seem to know what you're doing!",
-		body: `<html>
-<head>
-	<title>Jigsaw Puzzle</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/trontastic/jquery-ui.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<style>
-		#container
-		{
-			width: 850px;
-			border: 2px solid black;
-			border-radius: 20px;
-			margin: 10px auto;
-			padding: 10px;
-		}
-		#pieceContainer
-		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
-			float: left;
-			text-align: center;
-			font-size: 30px;
-			line-height: 400px;
-			position: relative;
-		}
-		#puzzleContainer
-		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
-			float: right;
-			background-size: contain;
-		}
-		ul
-		{
-			list-style-type: none;
-			text-align: center;
-		}
-		ul button
-		{
-			width: 100px;
-			border: 1px solid black;
-			font-size: 20px;
-			border-radius: 5px;
-			padding: 5px;
-			margin-top: 10px;
-		}
-		#btnReset
-		{
-			display: none;
-		}
-		.piece
-		{
-			width: 100px;
-			height: 71px;
-			border: 1px solid black;
-			float: left;
-			background-image:url(assets/minigames/website-fundraiser.png);
-			background-repeat: no-repeat;
-		}
-	</style>
-	<script>
-		$(document).ready(function() {
-			var pieces = createPieces(true);
-			$("#puzzleContainer").html(pieces);
-			$("#btnStart").click(function(){
-				var pieces = $("#puzzleContainer div");
-				pieces.each(function(){
-					var leftPosition = Math.floor(Math.random() * 290 + 0) + "px";
-					var topPosition = Math.floor(Math.random() * 204 + 0) + "px";
-					$(this).addClass("draggablePiece").css({
-						position: "absolute",
-						left: leftPosition,
-						top: topPosition
-					})
-					$("#pieceContainer").append($(this));
-				});
-				var emptyString = createPieces(false);
-				$("#puzzleContainer").html(emptyString);
-				$(this).hide();
-				$("#btnReset").show();
-				implementLogic();
-			});
-			$("#btnReset").click(function() {
-				var newPieces = createPieces(true);
-				$("#puzzleContainer").html(newPieces);
-				$(this).hide();
-				$("#btnStart").show();
-				$("#pieceContainer").empty();
-			});
-			function createPieces(withImage) {
-				var rows = 4, columns = 4;
-				var pieces = "";
-				for (var i = 0, top = 0, order = 0; i < rows; i++, top -= 71) {
-					for (var j = 0, left = 0; j < columns; j++, left -= 100, order++) {
-						if (withImage)
-							pieces += "<div style='background-position: " + left + "px " + top + "px;' class='piece' data-order=" + order + "></div>";
-						else
-							pieces += "<div style='background-image: none;' class='piece droppableSpace'></div>";
-					}
-				}
-				return pieces;
-			}
-			function checkIfPuzzleSolved() {
-				if ($("#puzzleContainer .droppedPiece").length != 16)
-					return false;
-				for (var k = 0; k < 16; k++) {
-					var item = $("#puzzleContainer .droppedPiece:eq(" + k + ")");
-					var order = item.data("order");
-					if (k != order) {
-						$("#pieceContainer").text("Whoops! Try again!");
-						return false;
-					}
-				}
-				$("#pieceContainer").text("Wow! This is a great website!");
-				return true;
-			}
-			function implementLogic() {
-				$(".draggablePiece").draggable({
-					revert: "invalid",
-					start: function() {
-						if ($(this).hasClass("droppedPiece")) {
-							$(this).removeClass("droppedPiece");
-							$(this).parent().removeClass("piecePresent");
-						}
-					}
-				});
-				$(".droppableSpace").droppable({
-					hoverClass: "ui-state-highlight",
-					accept: function() {
-						return !$(this).hasClass("piecePresent");
-					},
-					drop: function(event, ui) {
-						var draggableElement = ui.draggable;
-						var droppedOn = $(this);
-						droppedOn.addClass("piecePresent");
-						$(draggableElement).addClass("droppedPiece").css({
-							position: "relative",
-							left: 0,
-							top: 0
-						}).appendTo(droppedOn);
-						checkIfPuzzleSolved();
-					}
-				});
-			}
-		});
-	</script>
-</head>
-<body>
-	<div id="container">
-		<div id="pieceContainer"></div>
-		<div id="puzzleContainer"></div>
-		<ul id="buttons">
-			<li><button id="btnStart">Start</button></li>
-			<li><button id="btnReset">Reset</button></li>
-		</ul>
-	</div>
-</body>
-</html>
-					`
+		body: `
+			<p style="text-align:center;"><a href="jigsaw-puzzle.html" target="_blank">Let's make a GoFundMe!</a></p>
+		`
+	},
+	'Minigame2': {
+		body: `
+			<p style="text-align:center;"><a href="poster.html" target="_blank">Let's design a poster!</a></p>
+		`
+	},
+	'Minigame3': {
+		body: `
+			<p style="text-align:center;"><a href="petition.html" target="_blank">Let's run a rally!</a></p>
+		`
 	}
-
 });
 
 // Define the notifications used in the game
@@ -412,6 +261,8 @@ monogatari.script ({
 	// The game starts here.
 	"start": [
 		"show message Minigame1",
+		"show message Minigame2",
+		"show message Minigame3",
 		"play music bgm with volume 25 loop",
 		
 		"show scene #000000 with fadeIn",

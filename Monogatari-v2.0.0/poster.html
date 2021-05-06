@@ -7,44 +7,28 @@
 	<style>
 		#container
 		{
-			width: 850px;
-			border: 2px solid black;
-			border-radius: 20px;
+			width: auto;
 			margin: 10px auto;
 			padding: 10px;
 		}
 		#pieceContainer
 		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
+			width: 50%;
 			float: left;
 			text-align: center;
-			font-size: 30px;
-			line-height: 400px;
 			position: relative;
 		}
 		#puzzleContainer
 		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
-			float: right;
+			width: 50%;
+			float: center;
 			background-size: fill;
 		}
 		#colorContainer
 		{
-			width: 50px;
-			height: 50;
+			width: 20%;
+			height: 20%;
 			background-repeat: no-repeat;
-			float: center;
-		}
-		#posterContainer
-		{
-			width: 100%;
-			height: 100%;
-			background-repeat: no-repeat;
-			float: center;
 		}
 		.poster
 		{
@@ -61,52 +45,45 @@
 		}
 		.text{
 			position: absolute;
-		  top: 70;
-		  left: 800;
+				top: 100;
+				left: 930;
 		}
 		.pant{
 			position: absolute;
-		  top: 180;
-		  left: 770;
+				top: 320;
+				left: 845;
 		}
 		.cloth{
 			position: absolute;
-		  top: 80;
-		  left: 750;
+				top: 120;
+				left: 805;
 		}
 		.face{
 			position: absolute;
-		  top: 95;
-		  left: 778;
+				top: 150;
+				left: 861;
 		}
 		.hair{
 			position: absolute;
-		  top: 88;
-		  left: 775;
+				top: 136;
+				left: 855;
 		}
 		.board{
 			position: absolute;
-		  top: 155;
-		  left: 745;
-		}
-		.blue
-		{
-			width: 100%;
-			height: 100%;
-			float: center;
-			background-image:url(assets/minigames/b3c0ff.png);
-			background-repeat: no-repeat;
-			background-size: cover;
+				top: 270;
+				left: 795;
 		}
 		.yellow
 		{
+			position: relative;
+				left: 50%;
 			width: 100%;
 			height: 100%;
 			float: center;
 			background-image:url(assets/minigames/Color_Yellow.png);
 			background-repeat: no-repeat;
-			background-size: cover;
-			background-size: cover;
+			background-size: fit;
+			background-size: contain;
 		}
 		.red
 		{
@@ -115,18 +92,20 @@
 			float: center;
 			background-image:url(assets/minigames/Color_Red.png);
 			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
+			background-size: fit;
+			background-size: contain;
 		}
 		.nude
 		{
+			position: relative;
+				left: 50%;
 			width: 100%;
 			height: 100%;
 			float: center;
 			background-image:url(assets/minigames/Color_Nude.png);
 			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
+			background-size: fit;
+			background-size: contain;
 		}
 		.white
 		{
@@ -135,8 +114,8 @@
 			float: center;
 			background-image:url(assets/minigames/Color_White.png);
 			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
+			background-size: fit;
+			background-size: contain;
 		}
 		.black
 		{
@@ -145,122 +124,11 @@
 			float: center;
 			background-image:url(assets/minigames/Color_Black.png);
 			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
-		}
-		ul
-		{
-			list-style-type: none;
-			text-align: center;
-		}
-		ul button
-		{
-			width: 100px;
-			border: 1px solid black;
-			font-size: 20px;
-			border-radius: 5px;
-			padding: 5px;
-			margin-top: 10px;
-		}
-		#btnReset
-		{
-			display: none;
-		}
-		.piece
-		{
-			width: 100px;
-			height: 71px;
-			border: 1px solid black;
-			float: left;
-			background-image:url(assets/minigames/b3c0ff.png);
-			background-repeat: no-repeat;
+			background-size: fit;
+			background-size: contain;
 		}
 	</style>
 	<script>
-		$(document).ready(function() {
-			//var pieces = createPieces(true);
-			$("#puzzleContainer").html(pieces);
-			$("#btnStart").click(function(){
-				var pieces = $("#puzzleContainer div");
-				pieces.each(function(){
-					var leftPosition = Math.floor(Math.random() * 290 + 0) + "px";
-					var topPosition = Math.floor(Math.random() * 204 + 0) + "px";
-					$(this).addClass("draggablePiece").css({
-						position: "absolute",
-						left: leftPosition,
-						top: topPosition
-					})
-					$("#pieceContainer").append($(this));
-				});
-				var emptyString = createPieces(false);
-				$("#puzzleContainer").html(emptyString);
-				$(this).hide();
-				$("#btnReset").show();
-				implementLogic();
-			});
-			$("#btnReset").click(function() {
-				var newPieces = createPieces(true);
-				$("#puzzleContainer").html(newPieces);
-				$(this).hide();
-				$("#btnStart").show();
-				$("#pieceContainer").empty();
-			});
-			function createPieces(withImage) {
-				var rows = 4, columns = 4;
-				var pieces = "";
-				for (var i = 0, top = 0, order = 0; i < rows; i++, top -= 71) {
-					for (var j = 0, left = 0; j < columns; j++, left -= 100, order++) {
-						if (withImage)
-							pieces += "<div style='background-position: " + left + "px " + top + "px;' class='piece' data-order=" + order + "></div>";
-						else
-							pieces += "<div style='background-image: none;' class='piece droppableSpace'></div>";
-					}
-				}
-				return pieces;
-			}
-			function checkIfPuzzleSolved() {
-				if ($("#puzzleContainer .droppedPiece").length != 16)
-					return false;
-				for (var k = 0; k < 16; k++) {
-					var item = $("#puzzleContainer .droppedPiece:eq(" + k + ")");
-					var order = item.data("order");
-					if (k != order) {
-						$("#pieceContainer").text("Whoops! Try again!");
-						return false;
-					}
-				}
-				$("#pieceContainer").text("Wow! This is a great website!");
-				return true;
-			}
-			function implementLogic() {
-				$(".draggablePiece").draggable({
-					revert: "invalid",
-					start: function() {
-						if ($(this).hasClass("droppedPiece")) {
-							$(this).removeClass("droppedPiece");
-							$(this).parent().removeClass("piecePresent");
-						}
-					}
-				});
-				$(".droppableSpace").droppable({
-					hoverClass: "ui-state-highlight",
-					accept: function() {
-						return !$(this).hasClass("piecePresent");
-					},
-					drop: function(event, ui) {
-						var draggableElement = ui.draggable;
-						var droppedOn = $(this);
-						droppedOn.addClass("piecePresent");
-						$(draggableElement).addClass("droppedPiece").css({
-							position: "relative",
-							left: 0,
-							top: 0
-						}).appendTo(droppedOn);
-						checkIfPuzzleSolved();
-					}
-				});
-			}
-		});
 		function allowDrop(ev) {
 		  ev.preventDefault();
 		}
@@ -272,9 +140,8 @@
 		function drop(ev) {
 		  ev.preventDefault();
 		  var data = ev.dataTransfer.getData("text");
-		  //ev.target.appendChild(document.getElementById(data));
 		  if(ev.target.id=="text"){
-		  	ev.target.src='assets/minigames/text-' + data + '.png';//addClass("saturate");
+		  	ev.target.src='assets/minigames/text-' + data + '.png';
 		  }else if(ev.target.id=="pant"){
 		  	ev.target.src='assets/minigames/pant-' + data + '.png';
 		  }else{
@@ -283,43 +150,36 @@
 		}
 	</script>
 </head>
-<body>
+<body style="background-color:#8787a1;">
 	<div id="container">
 		<div id="pieceContainer">
-			<div id="colorContainer">
-				<div id="b3c0ff" draggable="true" ondragstart="drag(event)" class="blue"></div>
-			</div>
-			<div id="colorContainer">
-				<div id="f8c000" draggable="true" ondragstart="drag(event)" class="yellow"></div>
-			</div>
-			<div id="colorContainer">
+			<div id="colorContainer" style="float: left;">
 				<div id="ffffef" draggable="true" ondragstart="drag(event)" class="white"></div>
 			</div>
-			<div id="colorContainer">
+			<div id="colorContainer" style="float: left;">
 				<div id="a65659" draggable="true" ondragstart="drag(event)" class="red"></div>
 			</div>
-			<div id="colorContainer">
-				<div id="f8c49e" draggable="true" ondragstart="drag(event)" class="nude"></div>
-			</div>
-			<div id="colorContainer">
+			<div id="colorContainer" style="float: left;">
 				<div id="232023" draggable="true" ondragstart="drag(event)" class="black"></div>
+			</div>
+			<div id="colorContainer" style="float: center;"></div>
+			<div id="colorContainer" style="float: center; height: 5%;"></div>
+			<div id="colorContainer" style="float: left;">
+				<div id="f8c000" draggable="true" ondragstart="drag(event)" class="yellow"></div>
+			</div>
+			<div id="colorContainer" style="float: left;">
+				<div id="f8c49e" draggable="true" ondragstart="drag(event)" class="nude"></div>
 			</div>
 		</div>
 		<div id="puzzleContainer" ondrop="drop(event)" ondragover="allowDrop(event)">
-			
-			<img src="assets/minigames/bg-232023.png" height="292" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='bg' class='bg'>
-			<img src="assets/minigames/pant-ffffef.png" height="108" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='pant' class ='pant'>
-			<img src="assets/minigames/cloth-ffffef.png" height="108" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='cloth' class ='cloth'>
-			<img src="assets/minigames/face-a65659.png" height="45" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='face' class ='face'>
-			<img src="assets/minigames/hair-f8c000.png" height="77" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='hair' class ='hair'>
-			<img src="assets/minigames/board-f8c49e.png" height="72" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='board' class ='board'>
-	
-			<img src="assets/minigames/text-ffffef.png" height="217" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='text' class ='text'>
-</div>
-		<ul id="buttons">
-			<li><button id="btnStart">Start</button></li>
-			<li><button id="btnReset">Reset</button></li>
-		</ul>
+			<img src="assets/minigames/bg-232023.png" height="584" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='bg' class='bg'>
+			<img src="assets/minigames/pant-ffffef.png" height="216" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='pant' class ='pant'>
+			<img src="assets/minigames/cloth-ffffef.png" height="216" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='cloth' class ='cloth'>
+			<img src="assets/minigames/hair-f8c000.png" height="154" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='hair' class ='hair'>
+			<img src="assets/minigames/face-a65659.png" height="90" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='face' class ='face'>
+			<img src="assets/minigames/board-f8c49e.png" height="144" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='board' class ='board'>
+			<img src="assets/minigames/text-ffffef.png" height="434" style="float:left" ondrop="drop(event)" ondragover="allowDrop(event)" id='text' class ='text'>
+		</div>
 	</div>
 </body>
 </html>
