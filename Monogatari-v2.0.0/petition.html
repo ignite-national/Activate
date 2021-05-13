@@ -5,149 +5,64 @@
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/trontastic/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<style>
+		body {
+		  background-color: #FAF4E4;
+		}
+
 		#container
 		{
-			width: 850px;
-			border: 2px solid black;
+			width: 80%;
+			height: 60%;
 			border-radius: 20px;
+			border: 2px solid gray ;
 			margin: 10px auto;
 			padding: 10px;
+			background-color: #FAF4E4;
 		}
 		#pieceContainer
 		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
-			float: left;
+			width: 20%;
+			height: 25%;
+			margin-top: 1%;
+			margin-left: 40%;
+			float: center;
+
+			border-radius: 20px;
+			background-color: #8787a1;
 			text-align: center;
-			font-size: 30px;
-			line-height: 400px;
 			position: relative;
-		}
-		#puzzleContainer
-		{
-			width: 408px;
-			height: 292px;
-			border: 1px solid black;
-			float: right;
-			background-size: fill;
-		}
-		#colorContainer
-		{
-			width: 50px;
-			height: 50px;
-			background-repeat: no-repeat;
-			float: center;
-			position: absolute;
-		}
-		#test
-		{
-			width: 50px;
-			height: 50px;
-			background-repeat: no-repeat;
-			float: center;
-			position: absolute;
-		}
-		#posterContainer
-		{
-			width: 100%;
-			height: 100%;
-			background-repeat: no-repeat;
-			float: center;
-		}
-		.poster
-		{
-			width: 100%;
-			height: 100%;
-			float: center;
-			background-image:url(assets/minigames/poster.png);
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.text
-		{
-			width: 100%;
-			height: 100%;
-			float: center;
-			background-image:url(assets/minigames/text.png);
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.blue
-		{
-			width: 50px;
-			height: 50px;
-			float: center;
-			background-image:url(assets/minigames/bubbles/Bubble_with_text_01.png);
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.yellow
-		{
-			width: 100px;
-			height: 100px;
-			float: center;
-			background-image:url(assets/minigames/Color_Yellow.png);
-			background-repeat: no-repeat;
-			background-size: cover;
 		}
 		.right
 		{
-			width: 100px;
-			height: 100px;
+			width: 10%;
+			height: 10%;
 			float: center;
-			background-image:url(assets/minigames/Color_Yellow.png);
 			background-repeat: no-repeat;
-			background-size: cover;
+			background-size: contain;
+			position: relative;
 		}
 		.left
 		{
-			width: 100px;
-			height: 100px;
+			width: 10%;
+			height: 10%;
 			float: center;
-			background-image:url(assets/minigames/Color_Yellow.png);
 			background-repeat: no-repeat;
-			background-size: cover;
+			background-size: contain;
+			position: relative;
 		}
-		.red
+		.done
 		{
-			width: 50px;
-			height: 50px;
+
+			position: relative;
+			width: 30%;
+			height: auto;
+
 			float: center;
-			background-image:url(assets/minigames/Color_Red.png);
-			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
-		}
-		.nude
-		{
-			width: 50px;
-			height: 50px;
-			float: center;
-			background-image:url(assets/minigames/Color_Nude.png);
-			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
-		}
-		.white
-		{
-			width: 50px;
-			height: 50px;
-			float: center;
-			background-image:url(assets/minigames/Color_White.png);
-			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
-		}
-		.black
-		{
-			width: 50px;
-			height: 50px;
-			float: center;
-			background-image:url(assets/minigames/Color_Black.png);
-			background-repeat: no-repeat;
-			background-size: fill;
-			background-size: cover;
+ 			 margin: auto;
+
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
 		}
 		ul
 		{
@@ -182,89 +97,23 @@
 			//var pieces = createPieces(true);
 			//$("#puzzleContainer").html(pieces);
 
-			
-			moveBubbles();
+			var stopMoving = false;
 			$("#btnStart").click(function(){
 
-				var pieces = $("#puzzleContainer div");
-				pieces.each(function(){
-					var leftPosition = Math.floor(Math.random() * 290 + 0) + "px";
-					var topPosition = Math.floor(Math.random() * 204 + 0) + "px";
-					$(this).addClass("draggablePiece").css({
-						position: "absolute",
-						left: leftPosition,
-						top: topPosition
-					})
-					$("#pieceContainer").append($(this));
-				});
-				var emptyString = createPieces(false);
-				$("#puzzleContainer").html(emptyString);
+				stopMoving = false;
+				setStopMoving(false);
+				moveBubbles();
+
 				$(this).hide();
 				$("#btnReset").show();
-				implementLogic();
 			});
 			$("#btnReset").click(function() {
-				var newPieces = createPieces(true);
-				$("#puzzleContainer").html(newPieces);
+				$("#bubbles").html("");
+				stopMoving = true;
+				setStopMoving(true);
 				$(this).hide();
 				$("#btnStart").show();
-				$("#pieceContainer").empty();
 			});
-			function createPieces(withImage) {
-				var rows = 4, columns = 4;
-				var pieces = "";
-				for (var i = 0, top = 0, order = 0; i < rows; i++, top -= 71) {
-					for (var j = 0, left = 0; j < columns; j++, left -= 100, order++) {
-						if (withImage)
-							pieces += "<div style='background-position: " + left + "px " + top + "px;' class='piece' data-order=" + order + "></div>";
-						else
-							pieces += "<div style='background-image: none;' class='piece droppableSpace'></div>";
-					}
-				}
-				return pieces;
-			}
-			function checkIfPuzzleSolved() {
-				if ($("#puzzleContainer .droppedPiece").length != 16)
-					return false;
-				for (var k = 0; k < 16; k++) {
-					var item = $("#puzzleContainer .droppedPiece:eq(" + k + ")");
-					var order = item.data("order");
-					if (k != order) {
-						$("#pieceContainer").text("Whoops! Try again!");
-						return false;
-					}
-				}
-				$("#pieceContainer").text("Wow! This is a great website!");
-				return true;
-			}
-			function implementLogic() {
-				$(".draggablePiece").draggable({
-					revert: "invalid",
-					start: function() {
-						if ($(this).hasClass("droppedPiece")) {
-							$(this).removeClass("droppedPiece");
-							$(this).parent().removeClass("piecePresent");
-						}
-					}
-				});
-				$(".droppableSpace").droppable({
-					hoverClass: "ui-state-highlight",
-					accept: function() {
-						return !$(this).hasClass("piecePresent");
-					},
-					drop: function(event, ui) {
-						var draggableElement = ui.draggable;
-						var droppedOn = $(this);
-						droppedOn.addClass("piecePresent");
-						$(draggableElement).addClass("droppedPiece").css({
-							position: "relative",
-							left: 0,
-							top: 0
-						}).appendTo(droppedOn);
-						checkIfPuzzleSolved();
-					}
-				});
-			}
 		});
 		function allowDrop(ev) {
 		  ev.preventDefault();
@@ -282,47 +131,54 @@
 		  	var x = parseInt(ev.target.innerHTML);
 		  	ev.target.innerHTML = x + 1;
 		  	ev.target.style.color=data;
+		  	if (x >= 30) stopMoving = true;
 		  }else{
 		  	ev.target.style.backgroundColor=data;
 		  }
 
 		}
+		var stopMoving = false;
+			function setStopMoving(sm) {
+				stopMoving = sm
+			}
 			var id = null;
 		function moveBubbles() {
 		  var pieces = $("#bubbles div");
 				
 		  console.log("hello!"); 
 		  var pos = 500;
-		  var min = 500;
-		  var max = 1000;
+		  var w = window.innerWidth;
+  			var offset = Math.floor((w - $("#container").width()) / 2)
+		  var min = 0 + offset;
+		  var max = Math.floor($("#container").width() + offset - ($(".left").width()) * 8);
+		  console.log(min);
+		  console.log(max);
+		  console.log(offset);
 		  clearInterval(id);
 		  id = setInterval(frame, 100);
 		  var f = 0;
 		  function frame() {
-		  //	console.log(pos);
+		  	//console.log(f);
 		  	pieces.each(function(){
 		  		if(document.getElementById(this.id) != null){
 			  		var currentLeft = parseInt(document.getElementById(this.id).style.left);
-			  		//console.log(this.id + " Current Left: " + currentLeft + " Dir: " + this.className);
 					if(this.className == 'right'){	
-						if (currentLeft == max) {
-					      clearInterval(id);
+						if (currentLeft >= max) {
+					      //clearInterval(id);
+					      document.getElementById(this.id).remove();
 					    } else {
-					      currentLeft++; 
+					      currentLeft = currentLeft+ 4;//++; 
 					      $(this).css({
-								position: "absolute",
 								left: currentLeft + 'px'
 							})
-					 //    console.log("new Left? " + currentLeft);
-					   //  console.log("new Left " + this.style.left);
 					    }
 					}else{
-						if (currentLeft == min) {
-					      clearInterval(id);
+						if (currentLeft <= min) {
+					      //clearInterval(id);
+					      document.getElementById(this.id).remove();
 					    } else {
-					      currentLeft--; 
+					      currentLeft = currentLeft - 4; //--; 
 					      $(this).css({
-								position: "absolute",
 								left: currentLeft + 'px'
 							})
 					    }
@@ -330,35 +186,83 @@
 					
 				}
 			});
-				if(f % 50 == 0){
-						console.log("new bubble: " + f);
-						//add new bubble
-						var left = min;
+			if(f % 15 == 0){
+				//	console.log("new bubble: " + f);
+					//add new bubble
+					//get min and max from parent
+	
+					var bubDec = '';
+					var bubNum = Math.floor(Math.random() * 23 + 0) + 1;
+					if(bubNum < 10) bubDec = '0';
+
+					//console.log(bubNum);
+					var i = 0;
+					while(document.getElementById("bubNum_" + bubDec + bubNum) != null && i < 100){
+						bubNum = Math.floor(Math.random() * 23 + 0) + 1;
+						if(bubNum < 10) bubDec = '0';
+						else bubDec = '';
+						i ++;
+					}
+					if(i < 100){
+						var bub =document.createElement("div");
+						bub.setAttribute("id", "bubNum_" + bubDec + bubNum);
+										//parentWidth(document.getElementById('typehead'));
+
+	  					var w = window.innerWidth;
+	  					var offset = Math.floor((w - document.getElementById("bubbles").clientWidth) / 2)
+	  					//console.log(offset); 
+						var left = 0;
 						var dir = 'right';
+						//console.log(document.getElementById("bubbles").clientWidth);
+						//console.log($(".right").width());
 						if(Math.floor(Math.random() * 2) == 1){
 							dir = 'left';
-							left = max;
+							console.log($(".left").width());
+							console.log(document.getElementById("bubbles").clientWidth);
+							console.log($("#bubbles").width());
+							console.log($("#container").width());
+							left = Math.floor(document.getElementById("bubbles").clientWidth - ($(".left").width() * 8));
+							if($(".left").width() == undefined){
+								left = 0;
+								dir = 'right';
+							}
 						} 
-						var bubDec = '';
-						var bubNum = Math.floor(Math.random() * 23 + 0) + 1;
-						if(bubNum < 10) bubDec = '0';
+						left = left + offset;
+						var leftHeight = $(".left").height();
+						var top = Math.floor((Math.random() * $("#container").height()) - ($(".left").height()*2));
+						if (leftHeight  == undefined || top < 0) top = Math.floor(Math.random() * 20);
+						//console.log("top" + top);
+						//console.log(" bubs height" + $(".left").height());
 
-						console.log(bubNum);
-						document.getElementById("bubbles").innerHTML = document.getElementById("bubbles").innerHTML + "<div id='bubNum_" + bubNum + "' class='" + dir + "' draggable='true' ondragstart='drag(event)' style='background-image:url(assets/minigames/bubbles/Bubble_with_text_" + bubDec + bubNum + ".png); top:" + Math.floor(Math.random() * 20 + 0) * 20 + "px; left:" + left + "px;'></div>";
+
+						bub.setAttribute("class",  dir);
+						bub.setAttribute("draggable", "true");
+						bub.setAttribute("ondragstart", "drag(event)");
+						bub.setAttribute("style", "background-image:url(assets/minigames/bubbles/Bubble_with_text_" + bubDec + bubNum + ".png); top:" + top + "px; left:" + left + "px; position: absolute;");
+						//bub.innerHTML = "<div id='bubNum_" + bubNum + "' class='" + dir + "' draggable='true' ondragstart='drag(event)' style='background-image:url(assets/minigames/bubbles/Bubble_with_text_" + bubDec + bubNum + ".png); top:" + Math.floor(Math.random() * 20 + 0) * 20 + "px; left:" + left + "px; position: relative;'></div>";
+						document.getElementById("bubbles").appendChild(bub);
 
 			  			pieces = $("#bubbles div");
 					}
-					f++;
-		    
+				}
+				if(stopMoving == true){
+					clearInterval(id);
+				}
+				f++;
 		  }
 		}
 	</script>
 </head>
 <body>
 	<div id="container">
-		<div id="bubbles" class ="bubbles">
 
-				<div id="blue" draggable="true" ondragstart="drag(event)" class="left" style="top: 50px; left:100px;"></div>
+			<div id="pieceContainer">
+
+			<div id="test" class="left"> </div>
+				<p style="color:#000000; font-family:Monaco; font-size:30px; text-align: center; "; ondrop="drop(event)" ondragover="allowDrop(event)" id="text">0</p>
+				<p style="color:#000000; font-family:Monaco; font-size:15px; text-align: center;" id="text">Signatures</p>
+		</div>
+		<div id="bubbles" class ="bubbles">
 				<!--
 				<div id="white" draggable="true" ondragstart="drag(event)" class="right" style="top:150px; left:10px;"></div>
 
@@ -368,12 +272,14 @@
 
 				<div id="black" draggable="true" ondragstart="drag(event)" class="left" style="top:300px; left:10px;"></div>
 -->
-			<p style="color:#FF0000; font-family:Monaco; font-size:50px; text-align: center;"; ondrop="drop(event)" ondragover="allowDrop(event)" id="text">0</p>
+
 			</div></div>
 		<ul id="buttons">
 			<li><button id="btnStart">Start</button></li>
-			<li><button id="btnReset">Reset</button></li>
+			<li><button id="btnReset">Done</button></li>
 		</ul>
+
+			<img src="assets/minigames/bubble-done.png"  id='done1' class='done'>
 	</div>
 </body>
 </html>
