@@ -390,7 +390,7 @@ monogatari.script ({
 				"option00": {
 					"Text": "We’re always here for you! But I’m not sure what to do next... How can we help?",
 					"onChosen": function(){addOnePoint()},
-					"Do": "jump chapter1Cont0"
+					"Do": "jump chapter1Cont0”
 				},
 				"option01": {
 					"Text": "I have no ideas. Shouldn’t we get professionals to help?",
